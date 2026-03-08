@@ -1,0 +1,453 @@
+// ⚡ ZING Database Schema — Prisma
+// PostgreSQL · Full-text Search · Soft Delete · Multilingual
+// Version: 8.0.0
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ═══════════════════════════════════════════
+// ENUMS
+// ═══════════════════════════════════════════
+
+enum Universe {
+  SCHOLAR
+  CODE_COSMOS
+  BATTLE_GROUND
+  CAREER
+  CIVILIZATION
+  KNOWLEDGE
+  CURIOSITY
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum ContentMode {
+  STORY
+  DEEP_DIVE
+  QUICK_SHOT
+  VISUAL_MAP
+  AI_CHAT
+}
+
+enum Language {
+  EN
+  HI
+  MR
+  TA
+  TE
+  BN
+  GU
+  KN
+  ML
+  PA
+  OR
+  SA
+}
+
+enum TranslatedBy {
+  HUMAN
+  AI_VERIFIED
+  AI_DRAFT
+  COMMUNITY
+}
+
+enum RelationType {
+  PREREQUISITE
+  RELATED
+  BUILDS_ON
+  OPPOSITE
+  DEEPER
+}
+
+enum TopicStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum UserRole {
+  FREE
+  VIDYARTHI
+  SCHOLAR_PLUS
+  ADMIN
+  EDITOR
+  MODERATOR
+}
+
+enum ContentSeriesType {
+  WHAT_IF
+  VERSUS
+  MYTH_VS_FACT
+  TIMELINE_RACE
+}
+
+// ═══════════════════════════════════════════
+// TOPIC — Heart of ZING
+// ═══════════════════════════════════════════
+
+/// The core content model. Every piece of knowledge in ZING is a Topic.
+/// Topics belong to a Universe and SubWorld, and support scrollytelling,
+/// ZING Moment Flash, Reading Aura, and 5 content modes.
+model Topic {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // ── Identity ──
+  slug        String      @unique
+  title       String      @db.VarChar(200)
+  subtitle    String?     @db.VarChar(300)
+  description String      @db.Text
+  universe    Universe
+  subWorld    String      @db.VarChar(100)
+  status      TopicStatus @default(DRAFT)
+  difficulty  Difficulty  @default(BEGINNER)
+
+  // ── Content (JSON) ──
+  /// Main content as structured JSON: { sections: [...], summary, keyFacts }
+  content Json @db.JsonB
+
+  /// Section configuration: Array of { id, title, type, content, mood }
+  sections Json @db.JsonB
+
+  /// Mood map per section: { sectionId: 'war'|'discovery'|'achievement'|'philosophy'|'neutral' }
+  mood Json @db.JsonB
+
+  /// Summary for Quick Shot mode (250 words max)
+  quickShotSummary String? @db.Text
+
+  /// Visual Map data: nodes + edges for knowledge visualization
+  visualMapData Json? @db.JsonB
+
+  // ── ZING Features ──
+  /// Whether this topic has the signature ZING Moment Flash animation
+  hasZingMomentFlash Boolean @default(false)
+
+  /// The sentence ID that triggers the ZING Moment Flash
+  zingMomentSentenceId String? @db.VarChar(100)
+
+  /// Enable ambient Reading Aura glow on current paragraph
+  readingAuraEnabled Boolean @default(true)
+
+  /// Lottie animation identifier for section transitions
+  lottieTransition String? @db.VarChar(100)
+
+  /// Optional scrollytelling configuration for special scroll effects
+  scrollytellingConfig Json? @db.JsonB
+
+  // ── Media ──
+  coverImage    String? @db.VarChar(500)
+  ogImage       String? @db.VarChar(500)
+  heroAnimation String? @db.VarChar(200) // Lottie or Rive URL
+
+  // ── SEO & Classification ──
+  /// Tags for search and categorization
+  tags String[] @default([])
+
+  /// Exam-specific tags: JEE, NEET, UPSC, CBSE-10, etc.
+  examTags String[] @default([])
+
+  /// Canonical source URLs for fact-checking
+  sources String[] @default([])
+
+  /// Information quality badge
+  qualityBadge String? @db.VarChar(50) // 'verified', 'expert-reviewed', 'community'
+
+  // ── Metrics ──
+  viewCount    Int @default(0)
+  likeCount    Int @default(0)
+  shareCount   Int @default(0)
+  readTimeMinutes Int @default(5)
+
+  // ── Publishing ──
+  publishedAt DateTime?
+  featuredAt  DateTime?
+
+  // ── Author ──
+  authorId String?
+  author   User?   @relation("TopicAuthor", fields: [authorId], references: [id])
+
+  // ── Soft Delete ──
+  deletedAt DateTime?
+
+  // ── Relations ──
+  translations    TopicTranslation[]
+  relationsFrom   TopicRelation[]    @relation("RelationFrom")
+  relationsTo     TopicRelation[]    @relation("RelationTo")
+  savedBy         SavedTopic[]
+  dailyContentFor DailyContent[]
+
+  // ── Indexes ──
+  @@index([universe, subWorld])
+  @@index([status, publishedAt])
+  @@index([slug])
+  @@index([universe, status])
+  @@index([difficulty])
+
+  @@map("topics")
+}
+
+// ═══════════════════════════════════════════
+// TOPIC TRANSLATION — Multilingual Support
+// ═══════════════════════════════════════════
+
+/// Stores translated versions of a Topic. Each translation is natively
+/// generated (not machine-translated) and goes through a review pipeline:
+/// AI_DRAFT → AI_VERIFIED → HUMAN
+model TopicTranslation {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // ── Language & Source ──
+  language     Language
+  translatedBy TranslatedBy @default(AI_DRAFT)
+
+  // ── Translated Content ──
+  title            String  @db.VarChar(200)
+  subtitle         String? @db.VarChar(300)
+  description      String  @db.Text
+  content          Json    @db.JsonB
+  sections         Json    @db.JsonB
+  quickShotSummary String? @db.Text
+
+  // ── Review status ──
+  reviewedBy   String?   @db.VarChar(200)
+  reviewedAt   DateTime?
+  reviewNotes  String?   @db.Text
+
+  // ── Relation ──
+  topicId String
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@unique([topicId, language])
+  @@index([language])
+  @@index([translatedBy])
+
+  @@map("topic_translations")
+}
+
+// ═══════════════════════════════════════════
+// TOPIC RELATION — Knowledge Graph
+// ═══════════════════════════════════════════
+
+/// Defines directional relationships between topics to build the
+/// Knowledge Galaxy graph. Used for auto-linking and navigation.
+model TopicRelation {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  relationType RelationType
+  strength     Float        @default(0.5) // 0.0–1.0 relevance score
+
+  // ── Relation ──
+  fromTopicId String
+  fromTopic   Topic  @relation("RelationFrom", fields: [fromTopicId], references: [id], onDelete: Cascade)
+
+  toTopicId String
+  toTopic   Topic  @relation("RelationTo", fields: [toTopicId], references: [id], onDelete: Cascade)
+
+  @@unique([fromTopicId, toTopicId, relationType])
+  @@index([fromTopicId])
+  @@index([toTopicId])
+
+  @@map("topic_relations")
+}
+
+// ═══════════════════════════════════════════
+// CHARACTER — Rive Animated Guides
+// ═══════════════════════════════════════════
+
+/// Rive-animated characters that guide users through universes.
+/// Loading is gated by useDeviceCapability().enableRive.
+model Character {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  slug        String   @unique @db.VarChar(100)
+  name        String   @db.VarChar(200)
+  description String   @db.Text
+  universe    Universe
+
+  // ── Rive Config ──
+  /// URL to the .riv file (CDN)
+  riveUrl String? @db.VarChar(500)
+
+  /// State machines: { "idle": "Default resting", "talking": "Explaining", "celebrating": "Quiz correct" }
+  riveStateMachines Json @db.JsonB
+
+  /// Fallback static image for low-tier devices
+  staticImageUrl String? @db.VarChar(500)
+
+  // ── Availability ──
+  /// Phase when this character becomes available (1=launch, 2=after revenue)
+  availablePhase Int @default(1)
+
+  /// Whether character is currently active
+  isActive Boolean @default(true)
+
+  // ── Metadata ──
+  era         String? @db.VarChar(100) // "Ancient India", "Victorian Era", etc.
+  nationality String? @db.VarChar(100)
+  knownFor    String? @db.Text
+
+  @@index([universe])
+
+  @@map("characters")
+}
+
+// ═══════════════════════════════════════════
+// USER
+// ═══════════════════════════════════════════
+
+/// User accounts. Reading is free (no login required).
+/// Accounts are for saving, bookmarking, AI chat history, and subscriptions.
+model User {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email       String   @unique @db.VarChar(255)
+  name        String?  @db.VarChar(200)
+  avatarUrl   String?  @db.VarChar(500)
+  role        UserRole @default(FREE)
+
+  // ── Preferences ──
+  preferredLanguage Language @default(EN)
+  reducedMotion     Boolean  @default(false)
+  liteMode          Boolean  @default(false) // Disables heavy animations
+
+  // ── Subscription ──
+  subscriptionTier   String?   @db.VarChar(50) // 'vidyarthi', 'scholar'
+  subscriptionExpiry DateTime?
+  razorpayCustomerId String?   @db.VarChar(200)
+
+  // ── Streaks & Engagement ──
+  readStreak   Int @default(0)
+  totalReads   Int @default(0)
+  lastReadDate DateTime?
+
+  // ── Soft Delete ──
+  deletedAt DateTime?
+
+  // ── Relations ──
+  savedTopics    SavedTopic[]
+  authoredTopics Topic[]          @relation("TopicAuthor")
+  chatSessions   AiChatSession[]
+
+  @@index([email])
+  @@index([role])
+
+  @@map("users")
+}
+
+// ═══════════════════════════════════════════
+// SAVED TOPIC — Bookmarks
+// ═══════════════════════════════════════════
+
+/// User bookmarks / saved topics for later reading
+model SavedTopic {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  // ── Reading Progress ──
+  /// Percentage of topic read (0-100)
+  progress Int @default(0)
+
+  /// Last section the user was reading
+  lastSectionId String? @db.VarChar(100)
+
+  /// Notes the user made while reading
+  notes String? @db.Text
+
+  // ── Relations ──
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  topicId String
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, topicId])
+  @@index([userId])
+
+  @@map("saved_topics")
+}
+
+// ═══════════════════════════════════════════
+// DAILY CONTENT — Viral Content Calendar
+// ═══════════════════════════════════════════
+
+/// Daily featured content for the ZING homepage.
+/// Supports 4 content series: What If, Versus, Myth vs Fact, Timeline Race.
+model DailyContent {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  // ── Schedule ──
+  scheduleDate DateTime @unique @db.Date
+  isPublished  Boolean  @default(false)
+
+  // ── Content ──
+  seriesType ContentSeriesType
+  headline   String              @db.VarChar(200)
+  teaser     String              @db.Text
+  imageUrl   String?             @db.VarChar(500)
+
+  // ── Linked Topic ──
+  topicId String?
+  topic   Topic?  @relation(fields: [topicId], references: [id])
+
+  // ── Engagement ──
+  viewCount  Int @default(0)
+  shareCount Int @default(0)
+
+  @@index([scheduleDate])
+  @@index([seriesType])
+
+  @@map("daily_content")
+}
+
+// ═══════════════════════════════════════════
+// AI CHAT SESSION — ZING Guide Conversations
+// ═══════════════════════════════════════════
+
+/// Stores AI chat sessions for the ZING Guide feature.
+/// Only available to logged-in users (Vidyarthi/Scholar tier).
+model AiChatSession {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // ── Context ──
+  universe String? @db.VarChar(50)
+  topicId  String? @db.VarChar(100)
+
+  // ── Messages ──
+  messages Json @db.JsonB // Array of { role: 'user'|'assistant', content, timestamp }
+
+  // ── Provider ──
+  aiProvider String @default("groq") @db.VarChar(50) // groq, gemini, claude
+
+  // ── User ──
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([topicId])
+
+  @@map("ai_chat_sessions")
+}

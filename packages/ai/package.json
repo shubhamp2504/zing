@@ -1,0 +1,23 @@
+{
+  "name": "@zing/ai",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./providers": "./providers.ts",
+    "./guide": "./guide.ts",
+    "./search": "./search.ts"
+  },
+  "dependencies": {
+    "groq-sdk": "^0.18.0",
+    "@google/generative-ai": "^0.24.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "typescript": "^5.9.2"
+  }
+}

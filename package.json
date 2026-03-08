@@ -1,0 +1,34 @@
+{
+  "name": "zing",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types",
+    "db:generate": "cd packages/database && npm run db:generate",
+    "db:migrate:prod": "cd packages/database && npm run db:migrate:prod",
+    "db:seed": "cd packages/database && npm run db:seed",
+    "db:seed:extended": "cd packages/database && npm run db:seed:extended",
+    "db:seed:relations": "cd packages/database && npm run db:seed:relations",
+    "db:seed:relations:extended": "cd packages/database && npm run db:seed:relations:extended",
+    "db:seed:all": "cd packages/database && npm run db:seed:all",
+    "deploy:check": "npm run check-types && npm run lint && npm run build",
+    "deploy:vercel": "vercel --prod",
+    "deploy:full": "npm run deploy:check && npm run deploy:vercel"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.4",
+    "turbo": "^2.8.14",
+    "typescript": "5.9.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "npm@11.6.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

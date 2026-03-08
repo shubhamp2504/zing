@@ -1,0 +1,878 @@
+/* ═══════════════════════════════════════════════════════════
+   ⚡ ZING — Master Global Stylesheet v8.0
+   India's Most Immersive Knowledge Universe
+   ═══════════════════════════════════════════════════════════ */
+
+@import "tailwindcss";
+
+/* ── Skip to Content (a11y) ── */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: #FFD700;
+  color: #000;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.skip-to-content:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  overflow: visible;
+}
+
+/* ═══════════════════════════════════════════
+   LAYER: BASE
+   Core variables, reset, typography
+   ═══════════════════════════════════════════ */
+
+@layer base {
+
+  /* ── ROOT VARIABLES ── */
+  :root {
+    /* Brand Colors */
+    --color-electric-yellow: #FFD700;
+    --color-deep-black: #0A0A0A;
+    --color-neon-purple: #8B5CF6;
+    --color-hot-orange: #FF6B00;
+    --color-pure-white: #FFFFFF;
+
+    /* Glass & Glow */
+    --glass-white: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glow-yellow: rgba(255, 215, 0, 0.15);
+    --glow-purple: rgba(139, 92, 246, 0.15);
+
+    /* Typography */
+    --font-display: 'Clash Display', sans-serif;
+    --font-heading: 'Outfit Variable', 'Outfit', sans-serif;
+    --font-body: 'Inter Variable', 'Inter', sans-serif;
+    --font-code: 'JetBrains Mono Variable', 'JetBrains Mono', monospace;
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-devanagari: 'Noto Sans Devanagari Variable', 'Noto Sans Devanagari', sans-serif;
+
+    /* Spacing */
+    --spacing-unit: 0.25rem;
+
+    /* Shadows */
+    --shadow-glow: 0 0 20px rgba(255, 215, 0, 0.3);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+    /* Universe (default — overridden by data-universe) */
+    --universe-primary: var(--color-electric-yellow);
+    --universe-secondary: #FDE047;
+    --universe-accent: #FEF9C3;
+    --universe-dark: #854D0E;
+
+    /* Layout */
+    --header-height: 4rem;
+    --sidebar-width: 16rem;
+    --content-max-width: 48rem;
+    --reading-max-width: 42rem;
+
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-normal: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ── UNIVERSE THEMES ── */
+
+  [data-universe="scholar"] {
+    --universe-primary: #3B82F6;
+    --universe-secondary: #60A5FA;
+    --universe-accent: #DBEAFE;
+    --universe-dark: #1E3A8A;
+  }
+
+  [data-universe="code-cosmos"] {
+    --universe-primary: #10B981;
+    --universe-secondary: #34D399;
+    --universe-accent: #D1FAE5;
+    --universe-dark: #065F46;
+  }
+
+  [data-universe="battle-ground"] {
+    --universe-primary: #EF4444;
+    --universe-secondary: #F87171;
+    --universe-accent: #FEE2E2;
+    --universe-dark: #991B1B;
+  }
+
+  [data-universe="career"] {
+    --universe-primary: #F59E0B;
+    --universe-secondary: #FBBF24;
+    --universe-accent: #FEF3C7;
+    --universe-dark: #92400E;
+  }
+
+  [data-universe="civilization"] {
+    --universe-primary: #8B5CF6;
+    --universe-secondary: #A78BFA;
+    --universe-accent: #EDE9FE;
+    --universe-dark: #5B21B6;
+  }
+
+  [data-universe="knowledge"] {
+    --universe-primary: #06B6D4;
+    --universe-secondary: #22D3EE;
+    --universe-accent: #CFFAFE;
+    --universe-dark: #164E63;
+  }
+
+  [data-universe="curiosity"] {
+    --universe-primary: #EC4899;
+    --universe-secondary: #F472B6;
+    --universe-accent: #FCE7F3;
+    --universe-dark: #9F1239;
+  }
+
+  /* ── BASE DARK THEME ── */
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-deep-black);
+    color: var(--color-pure-white);
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── TYPOGRAPHY ── */
+
+  h1, h2, h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+
+  h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+
+  code, pre, kbd, samp {
+    font-family: var(--font-code);
+    font-feature-settings: 'liga' 1, 'calt' 1;
+  }
+
+  /* ── LINKS ── */
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  a:hover {
+    color: var(--universe-primary);
+  }
+
+  /* ── RESET ── */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  img, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+  }
+
+  /* ── SELECTION ── */
+  ::selection {
+    background-color: var(--universe-primary);
+    color: var(--color-deep-black);
+  }
+
+  ::-moz-selection {
+    background-color: var(--universe-primary);
+    color: var(--color-deep-black);
+  }
+
+  /* ── FOCUS ── */
+  :focus-visible {
+    outline: 2px solid var(--color-electric-yellow);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--universe-primary);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  }
+
+  /* ── DEVANAGARI RENDERING ── */
+  :lang(hi), :lang(mr) {
+    --font-body: 'Noto Sans Devanagari Variable', 'Noto Sans Devanagari', 'Inter', sans-serif;
+    font-family: var(--font-body);
+    line-height: 2.0;
+    font-size: 1.0625rem;
+  }
+
+  :lang(hi) h1, :lang(hi) h2, :lang(hi) h3,
+  :lang(mr) h1, :lang(mr) h2, :lang(mr) h3 {
+    font-family: var(--font-devanagari);
+    line-height: 1.5;
+  }
+
+} /* end @layer base */
+
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ═══════════════════════════════════════════ */
+
+/* ── TABLET (≤1024px) ── */
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 3.5rem;
+  }
+
+  .zing-home-hero {
+    padding-top: 4rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .zing-section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Admin sidebar → narrow */
+  .admin-sidebar {
+    width: 4rem !important;
+    padding: 1rem 0.5rem !important;
+  }
+
+  .admin-sidebar .admin-nav-label {
+    display: none;
+  }
+
+  .admin-sidebar .admin-logo-text {
+    display: none;
+  }
+
+  .admin-main {
+    margin-left: 4rem !important;
+  }
+}
+
+/* ── SMALL TABLET / LARGE PHONE (≤768px) ── */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 3.25rem;
+  }
+
+  .universe-nav-label {
+    display: none;
+  }
+
+  .search-hint-text {
+    display: none;
+  }
+
+  .zing-home-hero {
+    padding-top: 3rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .zing-home-hero h1 {
+    margin-bottom: 1rem !important;
+  }
+
+  .zing-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+    gap: 0.75rem !important;
+  }
+
+  .zing-grid .glass-card {
+    padding: 1.25rem !important;
+  }
+
+  .featured-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+  }
+
+  .zing-value-row {
+    gap: 1rem !important;
+  }
+
+  /* Admin sidebar → bottom nav */
+  .admin-sidebar {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    flex-direction: row !important;
+    padding: 0.5rem !important;
+    justify-content: space-around !important;
+    border-right: none !important;
+    border-top: 1px solid rgba(255,255,255,0.06) !important;
+  }
+
+  .admin-sidebar .admin-nav-label {
+    display: none;
+  }
+
+  .admin-sidebar .admin-logo-text {
+    display: none;
+  }
+
+  .admin-sidebar a {
+    padding: 0.4rem !important;
+    font-size: 1.1rem !important;
+    justify-content: center !important;
+  }
+
+  .admin-main {
+    margin-left: 0 !important;
+    padding: 1rem !important;
+    padding-bottom: 4rem !important;
+  }
+}
+
+/* ── PHONE (≤480px) ── */
+@media (max-width: 480px) {
+  .universe-nav-strip {
+    display: none !important;
+  }
+
+  .zing-home-hero {
+    padding-top: 2.5rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .zing-section {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  .zing-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  .featured-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  .zing-value-row {
+    gap: 0.75rem !important;
+  }
+
+  .zing-value-row > div {
+    min-width: 100px !important;
+  }
+
+  .glass-card {
+    border-radius: 0.75rem;
+  }
+
+  .zing-home-hero .zing-cta-row {
+    gap: 0.75rem !important;
+  }
+
+  .zing-home-hero .zing-cta-row a,
+  .zing-home-hero .zing-cta-row button {
+    padding: 0.7rem 1.5rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Admin: reduce padding */
+  .admin-main {
+    padding: 0.75rem !important;
+    padding-bottom: 4.5rem !important;
+  }
+}
+
+/* ── SMALL PHONE (≤360px) ── */
+@media (max-width: 360px) {
+  .zing-grid {
+    gap: 0.4rem !important;
+  }
+
+  .glass-card {
+    padding: 1rem !important;
+  }
+
+  .featured-grid a {
+    padding: 1rem 1rem 0.75rem !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════
+   LAYER: COMPONENTS
+   Reusable component styles
+   ═══════════════════════════════════════════ */
+
+@layer components {
+
+  /* ── GLASSMORPHISM ── */
+  .glass-card {
+    background: var(--glass-white);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    transition: all var(--transition-normal);
+  }
+
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-glass);
+    transform: translateY(-2px);
+  }
+
+  .glass-card-glow {
+    background: var(--glass-white);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.08);
+  }
+
+  /* ── UNIVERSE CARD ── */
+  .universe-card {
+    background: var(--glass-white);
+    border: 1px solid rgba(var(--universe-primary), 0.2);
+    backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .universe-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--universe-primary), var(--universe-secondary));
+  }
+
+  /* ── READING AURA ── */
+  .reading-aura {
+    position: relative;
+  }
+
+  .reading-aura::after {
+    content: '';
+    position: absolute;
+    inset: -8px -16px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 215, 0, 0.04) 0%,
+      transparent 70%
+    );
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .reading-aura.active::after {
+    opacity: 1;
+  }
+
+  /* ── ZING MOMENT FLASH ── */
+  .zing-moment-flash {
+    position: relative;
+    z-index: 1;
+  }
+
+  .zing-moment-flash::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 215, 0, 0.2) 0%,
+      rgba(255, 215, 0, 0.06) 40%,
+      transparent 70%
+    );
+    border-radius: 50%;
+    z-index: -1;
+    animation: zingPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes zingPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+
+  /* ── READING PROGRESS BAR ── */
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--universe-primary), var(--color-electric-yellow));
+    z-index: 9999;
+    width: 0%;
+    animation: reading-fill linear;
+    animation-timeline: scroll(root block);
+  }
+
+  @keyframes reading-fill {
+    to { width: 100%; }
+  }
+
+  /* ── TOPIC TAG ── */
+  .topic-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    transition: all var(--transition-fast);
+  }
+
+  .topic-tag:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--universe-primary);
+    border-color: var(--universe-primary);
+  }
+
+  /* ── EXAM BADGE ── */
+  .exam-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    background: var(--universe-dark);
+    color: var(--universe-accent);
+  }
+
+  /* ── QUALITY BADGE ── */
+  .quality-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    border-radius: 4px;
+  }
+
+  .quality-badge[data-badge="verified"] {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .quality-badge[data-badge="expert-reviewed"] {
+    background: rgba(139, 92, 246, 0.15);
+    color: #A78BFA;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+  }
+
+  .quality-badge[data-badge="community"] {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60A5FA;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+} /* end @layer components */
+
+
+/* ═══════════════════════════════════════════
+   LAYER: UTILITIES
+   Helper classes
+   ═══════════════════════════════════════════ */
+
+@layer utilities {
+
+  /* ── TEXT GRADIENT ── */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #FFD700, #FF6B00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-universe {
+    background: linear-gradient(135deg, var(--universe-primary), var(--universe-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── GLOW EFFECTS ── */
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+
+  .glow-universe {
+    box-shadow: 0 0 20px color-mix(in srgb, var(--universe-primary) 30%, transparent);
+  }
+
+  /* ── BLUR LAYERS ── */
+  .blur-bg-sm { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .blur-bg-md { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  .blur-bg-lg { backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px); }
+
+  /* ── READING WIDTH ── */
+  .reading-width {
+    max-width: var(--reading-max-width);
+    margin-inline: auto;
+  }
+
+  .content-width {
+    max-width: var(--content-max-width);
+    margin-inline: auto;
+  }
+
+} /* end @layer utilities */
+
+
+/* ═══════════════════════════════════════════
+   CSS SCROLL-DRIVEN ANIMATIONS
+   Progressive enhancement — graceful degradation
+   ═══════════════════════════════════════════ */
+
+/* Scroll reveal — fade + slide up on scroll into view */
+.scroll-reveal,
+.scroll-reveal-native {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: scrollRevealUp linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+@keyframes scrollRevealUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Auto-Link Styles ── */
+.zing-auto-link {
+  color: var(--accent, #60a5fa);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(96, 165, 250, 0.4);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.zing-auto-link:hover {
+  color: #93c5fd;
+  border-bottom-color: #93c5fd;
+  border-bottom-style: solid;
+}
+
+/* Scroll reveal — fade from left */
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: scrollRevealLeft linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+@keyframes scrollRevealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scroll reveal — scale up */
+.scroll-reveal-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  animation: scrollRevealScale linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 35%;
+}
+
+@keyframes scrollRevealScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Parallax — slow upward scroll for backgrounds */
+.scroll-parallax-slow {
+  animation: parallaxSlow linear both;
+  animation-timeline: scroll(root block);
+}
+
+@keyframes parallaxSlow {
+  from { transform: translateY(0); }
+  to { transform: translateY(-60px); }
+}
+
+/* Parallax — fast upward scroll for foregrounds */
+.scroll-parallax-fast {
+  animation: parallaxFast linear both;
+  animation-timeline: scroll(root block);
+}
+
+@keyframes parallaxFast {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120px); }
+}
+
+/* Sticky fade — element fades in while sticky */
+.scroll-sticky-fade {
+  animation: stickyFade linear both;
+  animation-timeline: view();
+  animation-range: cover 10% cover 30%;
+}
+
+@keyframes stickyFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+/* ═══════════════════════════════════════════
+   UNIVERSE TEXTURE PATTERNS
+   Subtle background textures per universe
+   ═══════════════════════════════════════════ */
+
+[data-universe="civilization"] {
+  /* Warli art inspired pattern — very subtle */
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 10 L40 30 L20 30 Z' fill='none' stroke='rgba(139,92,246,0.03)' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+[data-universe="code-cosmos"] {
+  /* Circuit board inspired pattern */
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='20' x2='40' y2='20' stroke='rgba(16,185,129,0.02)' stroke-width='0.5'/%3E%3Cline x1='20' y1='0' x2='20' y2='40' stroke='rgba(16,185,129,0.02)' stroke-width='0.5'/%3E%3C/svg%3E");
+}
+
+[data-universe="battle-ground"] {
+  /* Grid pattern — strategy map feel */
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='rgba(239,68,68,0.015)' stroke-width='0.5'/%3E%3C/svg%3E");
+}
+
+[data-universe="knowledge"] {
+  /* Star field — subtle dots */
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='30' r='0.5' fill='rgba(6,182,212,0.04)'/%3E%3Ccircle cx='70' cy='80' r='0.4' fill='rgba(6,182,212,0.03)'/%3E%3Ccircle cx='50' cy='10' r='0.3' fill='rgba(6,182,212,0.05)'/%3E%3C/svg%3E");
+}
+
+
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+   Accessibility — respects user preferences
+   MUST be last section to override everything
+   ═══════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-scale,
+  .scroll-parallax-slow,
+  .scroll-parallax-fast,
+  .scroll-sticky-fade {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .reading-progress {
+    animation: none !important;
+  }
+
+  .zing-moment-flash::before {
+    animation: none !important;
+  }
+
+  .glass-card-hover:hover {
+    transform: none !important;
+  }
+}
