@@ -2,6 +2,10 @@
  * Seed TopicRelation records to populate the knowledge graph.
  * Usage: npx tsx seed-relations.ts
  */
+import { config } from 'dotenv';
+import { resolve } from 'path';
+config({ path: resolve(__dirname, '../../.env.local') });
+
 import { prisma } from './index';
 
 // Topic ID map

@@ -4,6 +4,10 @@
  *
  * Usage: npx tsx seed-extended.ts
  */
+import { config } from 'dotenv';
+import { resolve } from 'path';
+config({ path: resolve(__dirname, '../../.env.local') });
+
 import { PrismaClient, Universe, Difficulty } from '@prisma/client';
 
 const prisma = new PrismaClient();

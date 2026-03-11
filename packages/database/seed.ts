@@ -4,6 +4,10 @@
  * 
  * Usage: pnpm db:seed
  */
+import { config } from 'dotenv';
+import { resolve } from 'path';
+config({ path: resolve(__dirname, '../../.env.local') });
+
 import { PrismaClient, Universe, Difficulty, TopicStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();

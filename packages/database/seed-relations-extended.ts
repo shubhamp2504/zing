@@ -5,6 +5,10 @@
  * Looks up topics by slug (not hardcoded IDs) so it works regardless of when
  * topics were seeded.
  */
+import { config } from 'dotenv';
+import { resolve } from 'path';
+config({ path: resolve(__dirname, '../../.env.local') });
+
 import { prisma } from './index';
 
 type RelType = 'RELATED' | 'PREREQUISITE' | 'BUILDS_ON' | 'DEEPER' | 'OPPOSITE';
@@ -290,9 +294,13 @@ async function main() {
     try {
       await prisma.topicRelation.upsert({
         where: {
-          fromTopicId_toTopicId: { fromTopicId: fromId, toTopicId: toId },
+          fromTopicId_toTopicId_relationType: { 
+            fromTopicId: fromId, 
+            toTopicId: toId,
+            relationType: rel.type 
+          },
         },
-        update: { relationType: rel.type, strength: rel.strength },
+        update: { strength: rel.strength },
         create: {
           fromTopicId: fromId,
           toTopicId: toId,
