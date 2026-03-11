@@ -1,5 +1,8 @@
 /**
- * ⚡ ContentModeSelector — Prominent mode switcher for Read, Snap, Story, Swipe, Cinematic
+ * ⚡ ContentModeSelector — Prominent mode switcher for Read, Snap, and Cinematic
+ * 
+ * NOTE: Story & Swipe modes removed - they showed same content as Read but less impactful
+ * Future: Cinematic mode will be truly visual with character animations, graphics, movie-like storytelling
  */
 
 import Link from 'next/link';
@@ -7,9 +10,7 @@ import Link from 'next/link';
 const MODES = [
   { id: 'read', icon: '📖', label: 'Read', desc: 'Full article' },
   { id: 'snap', icon: '⚡', label: 'Snap', desc: 'Quick summary' },
-  { id: 'story', icon: '📱', label: 'Story', desc: 'Visual story' },
-  { id: 'swipe', icon: '👆', label: 'Swipe', desc: 'Flashcards' },
-  { id: 'cinematic', icon: '🎬', label: 'Cinematic', desc: 'Immersive' },
+  { id: 'cinematic', icon: '🎬', label: 'Cinematic', desc: 'Movie-like' },
 ] as const;
 
 interface ContentModeSelectorProps {

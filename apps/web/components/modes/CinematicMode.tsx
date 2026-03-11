@@ -1,5 +1,16 @@
 /**
  * ⚡ CinematicMode — ZING's most immersive experience
+ * 
+ * TODO: REDESIGN NEEDED - Make truly cinematic & movie-like
+ * Current: Text-based scenes with Ken Burns effect
+ * Future Vision:
+ *   - Character animations (Rive/Lottie) with character speaking/narrating
+ *   - Background images/illustrations related to topic
+ *   - Scene transitions like a movie (fade in/out, wipes)
+ *   - Visual graphics, charts, diagrams animated in
+ *   - Less text, more visual storytelling
+ *   - Background music/ambient sounds
+ *   - Should feel like watching a documentary/explainer video
  *
  * Full-screen, scene-by-scene reveal with:
  * - Ken Burns CSS keyframes (no JS)

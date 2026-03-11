@@ -99,9 +99,9 @@ export default function HomePage() {
       <section className="zing-section" style={{ padding: "2rem 1.5rem 3rem", maxWidth: "72rem", marginInline: "auto", width: "100%" }}>
         <div className="zing-value-row" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "2rem" }}>
           {[
-            { icon: "📱", label: "Story Mode", desc: "Instagram-style learning" },
-            { icon: "👆", label: "Swipe Cards", desc: "Tinder-style flashcards" },
-            { icon: "🎬", label: "Cinematic", desc: "Full-screen immersion" },
+            { icon: "�", label: "Read Mode", desc: "Deep dive articles" },
+            { icon: "⚡", label: "Snap View", desc: "Quick summaries" },
+            { icon: "🎬", label: "Cinematic", desc: "Movie-like storytelling" },
             { icon: "🇮🇳", label: "Desi Analogies", desc: "Cricket, chai & more" },
           ].map((f) => (
             <div key={f.label} style={{ textAlign: "center", minWidth: "140px" }}>

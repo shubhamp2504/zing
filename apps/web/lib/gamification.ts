@@ -13,8 +13,8 @@ export const XP_ACTIONS = {
   COMPLETE_SNAP_VIEW: 5,
   SHARE_TOPIC: 15,
   COMPLETE_CINEMATIC: 25,
-  COMPLETE_STORY_MODE: 20,
-  COMPLETE_SWIPE_DECK: 15,
+  // Removed: COMPLETE_STORY_MODE (20) - Story mode discontinued
+  // Removed: COMPLETE_SWIPE_DECK (15) - Swipe mode discontinued
   ASK_ZING_GUIDE: 5,
   DAILY_LOGIN: 10,
   STREAK_BONUS_7: 50,
