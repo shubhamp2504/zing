@@ -1,143 +1,183 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { UNIVERSES } from "@/lib/universes";
 import SearchTriggerButton from "@/components/home/SearchTriggerButton";
-import FeaturedTopics from "@/components/home/FeaturedTopics";
-import LivingWall from "@/components/home/LivingWall";
-import ScrollReveal from "@/components/scrollytelling/ScrollReveal";
-import AnimatedUniverseGrid from "@/components/home/AnimatedUniverseGrid";
-import HeroLottie from "@/components/home/HeroLottie";
 
 export const metadata: Metadata = {
   title: "ZING — India's Knowledge Universe",
+  description: "Learn anything. Understand everything. 7 universes of knowledge.",
 };
 
 export default function HomePage() {
-
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      {/* Hero Section */}
-      <header
-        className="zing-home-hero"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          padding: "6rem 1.5rem 3rem",
-          position: "relative",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,215,0,0.08) 0%, transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
-
-        <HeroLottie />
-
+    <div style={{ 
+      minHeight: "100vh", 
+      display: "flex", 
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "2rem 1.5rem"
+    }}>
+      {/* Minimal Hero */}
+      <main style={{ 
+        maxWidth: "48rem", 
+        width: "100%",
+        textAlign: "center" 
+      }}>
+        {/* Logo/Title */}
         <h1
-          className="text-gradient-gold"
           style={{
-            fontSize: "clamp(3rem, 8vw, 6rem)",
+            fontSize: "clamp(3rem, 10vw, 5rem)",
             fontWeight: 800,
             letterSpacing: "-0.04em",
             lineHeight: 1,
-            marginBottom: "1.5rem",
+            marginBottom: "1rem",
+            background: "linear-gradient(135deg, #FFD700 0%, #FFA500 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
           }}
         >
           ZING
         </h1>
 
-        <p
-          style={{
-            fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)",
-            color: "rgba(255,255,255,0.6)",
-            maxWidth: "32rem",
-            lineHeight: 1.6,
-            marginBottom: "2rem",
-          }}
-        >
-          India&apos;s most cinematic knowledge platform.
-          <br />
-          <span style={{ color: "rgba(255,255,255,0.85)" }}>
-            7 Universes. Infinite Knowledge.
-          </span>
+        {/* Tagline */}
+        <p style={{ 
+          fontSize: "clamp(1rem, 3vw, 1.25rem)", 
+          color: "rgba(255,255,255,0.6)",
+          marginBottom: "3rem",
+          lineHeight: 1.5
+        }}>
+          Learn anything. Understand everything.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="zing-cta-row" style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
+        {/* Search Bar */}
+        <div style={{ marginBottom: "3rem" }}>
+          <SearchTriggerButton />
+        </div>
+
+        {/* 3 Quick Shortcuts */}
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+          gap: "1rem",
+          maxWidth: "600px",
+          margin: "0 auto"
+        }}>
           <Link
             href="/scholar"
             style={{
-              display: "inline-flex",
+              display: "flex",
+              flexDirection: "column",
               alignItems: "center",
-              gap: "0.5rem",
-              background: "linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,215,0,0.1))",
-              border: "1px solid rgba(255,215,0,0.3)",
-              borderRadius: "2rem",
-              padding: "0.8rem 2rem",
-              fontSize: "1rem",
-              fontWeight: 600,
-              color: "#fff",
+              gap: "0.75rem",
+              padding: "2rem 1.5rem",
+              background: "rgba(255, 255, 255, 0.03)",
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              borderRadius: "0.75rem",
               textDecoration: "none",
+              transition: "all 0.2s",
+            }}
+            className="glass-card-hover"
+          >
+            <span style={{ fontSize: "2.5rem" }}>📚</span>
+            <span style={{ 
+              fontSize: "0.9375rem", 
+              fontWeight: 600, 
+              color: "rgba(255,255,255,0.9)" 
+            }}>
+              Student
+            </span>
+            <span style={{ 
+              fontSize: "0.75rem", 
+              color: "rgba(255,255,255,0.5)",
+              textAlign: "center"
+            }}>
+              School & Exams
+            </span>
+          </Link>
+
+          <Link
+            href="/code-cosmos"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "0.75rem",
+              padding: "2rem 1.5rem",
+              background: "rgba(255, 255, 255, 0.03)",
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              borderRadius: "0.75rem",
+              textDecoration: "none",
+              transition: "all 0.2s",
+            }}
+            className="glass-card-hover"
+          >
+            <span style={{ fontSize: "2.5rem" }}>💻</span>
+            <span style={{ 
+              fontSize: "0.9375rem", 
+              fontWeight: 600, 
+              color: "rgba(255,255,255,0.9)" 
+            }}>
+              Code
+            </span>
+            <span style={{ 
+              fontSize: "0.75rem", 
+              color: "rgba(255,255,255,0.5)",
+              textAlign: "center"
+            }}>
+              Learn Programming
+            </span>
+          </Link>
+
+          <Link
+            href="/knowledge"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "0.75rem",
+              padding: "2rem 1.5rem",
+              background: "rgba(255, 255, 255, 0.03)",
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              borderRadius: "0.75rem",
+              textDecoration: "none",
+              transition: "all 0.2s",
+            }}
+            className="glass-card-hover"
+          >
+            <span style={{ fontSize: "2.5rem" }}>🤔</span>
+            <span style={{ 
+              fontSize: "0.9375rem", 
+              fontWeight: 600, 
+              color: "rgba(255,255,255,0.9)" 
+            }}>
+              Curious
+            </span>
+            <span style={{ 
+              fontSize: "0.75rem", 
+              color: "rgba(255,255,255,0.5)",
+              textAlign: "center"
+            }}>
+              Explore Topics
+            </span>
+          </Link>
+        </div>
+
+        {/* Small Browse Link */}
+        <div style={{ marginTop: "3rem" }}>
+          <Link 
+            href="/scholar" 
+            style={{ 
+              fontSize: "0.875rem", 
+              color: "rgba(255,255,255,0.5)",
+              textDecoration: "none",
+              borderBottom: "1px solid rgba(255,255,255,0.2)"
             }}
           >
-            ⚡ Start Exploring
+            or browse all 7 universes →
           </Link>
-          <SearchTriggerButton />
         </div>
-      </header>
-
-      {/* Value Proposition */}
-      <ScrollReveal delay={100}>
-      <section className="zing-section" style={{ padding: "2rem 1.5rem 3rem", maxWidth: "72rem", marginInline: "auto", width: "100%" }}>
-        <div className="zing-value-row" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "2rem" }}>
-          {[
-            { icon: "�", label: "Read Mode", desc: "Deep dive articles" },
-            { icon: "⚡", label: "Snap View", desc: "Quick summaries" },
-            { icon: "🎬", label: "Cinematic", desc: "Movie-like storytelling" },
-            { icon: "🇮🇳", label: "Desi Analogies", desc: "Cricket, chai & more" },
-          ].map((f) => (
-            <div key={f.label} style={{ textAlign: "center", minWidth: "140px" }}>
-              <div style={{ fontSize: "1.75rem", marginBottom: "0.25rem" }}>{f.icon}</div>
-              <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "rgba(255,255,255,0.85)" }}>{f.label}</div>
-              <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)" }}>{f.desc}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-      </ScrollReveal>
-
-      {/* Universe Grid — Animated with framer-motion */}
-      <ScrollReveal delay={150}>
-      <main
-        className="zing-section"
-        style={{
-          flex: 1,
-          padding: "0 1.5rem 3rem",
-          maxWidth: "72rem",
-          width: "100%",
-          marginInline: "auto",
-        }}
-      >
-        <h2 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: "1rem", color: "rgba(255,255,255,0.8)" }}>
-          Explore 7 Universes
-        </h2>
-        <AnimatedUniverseGrid universes={UNIVERSES} />
       </main>
-      </ScrollReveal>
-
-      {/* Featured Topics (client-side fetched) */}
-      <FeaturedTopics />
-
-      {/* Living Wall — editorial feed */}
-      <LivingWall />
     </div>
   );
 }

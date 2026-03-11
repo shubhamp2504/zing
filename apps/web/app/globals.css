@@ -466,38 +466,31 @@
 
 @layer components {
 
-  /* ── GLASSMORPHISM ── */
+  /* ── SIMPLE CARDS (No glass effects for performance & clarity) ── */
   .glass-card {
-    background: var(--glass-white);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
     transition: all var(--transition-normal);
   }
 
   .glass-card-hover:hover {
-    background: rgba(255, 255, 255, 0.09);
+    background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: var(--shadow-glass);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
 
   .glass-card-glow {
-    background: var(--glass-white);
-    border: 1px solid rgba(255, 215, 0, 0.15);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: 1rem;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid var(--universe-primary);
+    border-radius: 0.75rem;
   }
 
   /* ── UNIVERSE CARD ── */
   .universe-card {
-    background: var(--glass-white);
-    border: 1px solid rgba(var(--universe-primary), 0.2);
-    backdrop-filter: blur(16px);
-    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
     position: relative;
     overflow: hidden;
   }
@@ -509,7 +502,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--universe-primary), var(--universe-secondary));
+    background: var(--universe-primary);
   }
 
   /* ── READING AURA ── */
@@ -834,6 +827,62 @@
 [data-universe="knowledge"] {
   /* Star field — subtle dots */
   background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='30' r='0.5' fill='rgba(6,182,212,0.04)'/%3E%3Ccircle cx='70' cy='80' r='0.4' fill='rgba(6,182,212,0.03)'/%3E%3Ccircle cx='50' cy='10' r='0.3' fill='rgba(6,182,212,0.05)'/%3E%3C/svg%3E");
+}
+
+/* ── MOBILE RESPONSIVE FIXES FOR SIMPLIFIED UI ── */
+@media (max-width: 768px) {
+  /* Header: Stack search bar on mobile */
+  header {
+    flex-wrap: wrap;
+    height: auto !important;
+    min-height: var(--header-height);
+  }
+
+  header form {
+    order: 3;
+    width: 100%;
+    max-width: 100% !important;
+    padding: 0 0 0.5rem 0;
+  }
+
+  /* Homepage: Ensure cards stack properly */
+  main > div[style*="grid"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Topic page: Reduce padding */
+  .topic-page {
+    padding: 1rem 1rem !important;
+  }
+
+  /* All buttons: Ensure 44px min tap target */
+  button,
+  a[role="button"],
+  .glass-card {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Make cards even more compact on small phones */
+  .glass-card {
+    padding: 1.25rem 1rem !important;
+  }
+
+  /* Font sizes: Slightly smaller on phones */
+  h1 {
+    font-size: clamp(2rem, 8vw, 2.5rem) !important;
+  }
+
+  h2 {
+    font-size: clamp(1.25rem, 5vw, 1.5rem) !important;
+  }
+
+  /* Search input: Full width on mobile */
+  header input[type="text"] {
+    font-size: 1rem;
+  }
 }
 
 
